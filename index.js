@@ -23,56 +23,6 @@ var connection = mysql.createConnection({
     //console.log("connected as id " + connection.threadId + "\n");
   });
 
-//display employees
-  function displayEmployee(){
-  var query = "SELECT * FROM employee";
-      connection.query(query, function(err, res){
-          console.table(res)
-          init();
-      })
-    }
-
-    //display departments
-  function displayDepartment(){
-    var query = "SELECT * FROM department";
-        connection.query(query, function(err, res){
-            console.table(res)
-            init();
-        })
-      }
-//create new department
-function createNewEmployee() {
-    inquirer.prompt([
-        {
-            type: "input",
-            name: "firstName",
-            message: "What is the employee's first name?"
-        },
-        {
-            type: "input",
-            name: "lastName",
-            message: "What is the employee's last name?"
-        },
-        {
-            type: "input",
-            name: "roleId",
-            message: "What is the employee's role id?"
-        },
-        {
-            type: "input",
-            name: "managerId",
-            message: "What is the employee's manager id?"
-        }
-    ]).then(answers => {
-        var query = `INSERT INTO employee (first_name, last_name, role_id, manager_id)
-        VALUES("${answers.firstName}", "${answers.lastName}", ${answers.roleId}, ${answers.managerId})`;
-            connection.query(query, function(err, res){
-                console.table(res)
-            
-            })
-    })
-}
-
 //Initial Questions
 function init(){
     inquirer.prompt([
@@ -88,23 +38,82 @@ function init(){
                 "Exit"
             ]
         }
-    ]).then(answers => {
+    ])
 
-        if(answers.action == 'View All Employees') {
-            displayEmployee();
-        } else if(answers.action == "Add Employee") {
-            createNewEmployee();
-        } else if(answers.action == "View All Departments") {
-            displayDepartment();
-        } else if(answers.action == "Update Employee Role") {
-            displayDepartment();
-        } else {
-            console.log('Goodbye!')
-            exit();
-        }
+    .then(function(answer) {
+        switch (answer.action) {
+        case "View All Employees":
+         displayEmployee();
+        break;
 
-    })
+        case "Add Employee":
+         addEmployee();
+        break;
+
+        case "View All Departments":
+         displayDepartment();
+        break;
+
+        case "Update Employee Role":
+         songSearch();
+        break;
+
+        case "Exit":
+         connection.end();
+        break;
+    }
+  });
 }
+
+//display employees
+    function displayEmployee(){
+    var query = "SELECT * FROM employee";
+        connection.query(query, function(err, res){
+            console.table(res)
+            init();
+        })
+      }
+  
+//display departments
+    function displayDepartment(){
+    var query = "SELECT * FROM department";
+          connection.query(query, function(err, res){
+              console.table(res)
+              init();
+          })
+        }
+  //create new employee
+  function addEmployee() {
+      inquirer.prompt([
+          {
+              type: "input",
+              name: "firstName",
+              message: "What is the employee's first name?"
+          },
+          {
+              type: "input",
+              name: "lastName",
+              message: "What is the employee's last name?"
+          },
+          {
+              type: "input",
+              name: "roleId",
+              message: "What is the employee's role id?"
+          },
+          {
+              type: "input",
+              name: "managerId",
+              message: "What is the employee's manager id?"
+          }
+      ]).then(answers => {
+          var query = `INSERT INTO employee (first_name, last_name, role_id, manager_id)
+          VALUES("${answers.firstName}", "${answers.lastName}", ${answers.roleId}, ${answers.managerId})`;
+              connection.query(query, function(err, res){
+                  console.table(res)
+                  init();
+              })
+      })
+  }
 
     function exit() {
         connection.end();
