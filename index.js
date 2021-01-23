@@ -178,7 +178,7 @@ function init(){
         }
     ]).then(answers => {
         var query = `INSERT INTO department (name)
-        VALUES("${answers.name})`;
+        VALUES("${answers.deptName}")`;
             connection.query(query, function(err, res){
                 console.table(res)
                 init();
@@ -206,7 +206,7 @@ function init(){
         }
     ]).then(answers => {
         var query = `INSERT INTO role (title, salary, department_id)
-        VALUES("${answers.title}", "${answers.salary}", ${answers.departmentId})`;
+        VALUES("${answers.title}", ${answers.salary}, ${answers.departmentID})`;
             connection.query(query, function(err, res){
                 console.table(res)
                 init();
