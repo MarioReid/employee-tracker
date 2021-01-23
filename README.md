@@ -9,7 +9,7 @@
   
   ![GITHUB Link to Project](https://github.com/MarioReid/employee-tracker)
 
-  ![Employee Tracker](EmployeeVid.mp4)
+  ![Employee Tracker](https://drive.google.com/file/d/12-5FtdTBK3pMlKy7fUpxukny8VgslThg/view)
 
   ## Table of Contents
   - [Description](#description)
