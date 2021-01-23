@@ -32,7 +32,6 @@
 
   ## Contributing
   
-
   Find me on GitHub: [MarioReid](https://github.com/MarioReid)
 
   Email me with any questions: mario.reid83@gmail.com
