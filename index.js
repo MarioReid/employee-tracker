@@ -33,6 +33,7 @@ function init(){
             choices: [
                 "View All Employees",
                 "Add Employee",
+                "Add Department",
                 "View All Departments",
                 "View All Roles",
                 "Update Employee Role",
@@ -51,6 +52,10 @@ function init(){
          addEmployee();
         break;
 
+        case "Add Department":
+         addDepartment();
+        break;
+        
         case "View All Departments":
          displayDepartment();
         break;
@@ -107,7 +112,7 @@ function init(){
         }, 
         {
             type: "input",
-            name: "targetId",
+            name: "newValue",
             message: "What is the new value of role id?"
         } 
     ]).then(answer => {
@@ -124,9 +129,8 @@ function init(){
                     init();
                 })
     })
-      }
-
-  //create new employee
+ }
+  //add new employee
   function addEmployee() {
       inquirer.prompt([
           {
@@ -158,6 +162,25 @@ function init(){
               })
       })
   }
+
+
+ //add new department
+ function addDepartment() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "deptName",
+            message: "What is the new Department name?"
+        }
+    ]).then(answers => {
+        var query = `INSERT INTO department (name)
+        VALUES("${answers.name})`;
+            connection.query(query, function(err, res){
+                console.table(res)
+                init();
+            })
+    })
+}
 
     function exit() {
         connection.end();
