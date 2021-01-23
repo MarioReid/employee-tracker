@@ -34,6 +34,7 @@ function init(){
                 "View All Employees",
                 "Add Employee",
                 "Add Department",
+                "Add Role",
                 "View All Departments",
                 "View All Roles",
                 "Update Employee Role",
@@ -54,6 +55,10 @@ function init(){
 
         case "Add Department":
          addDepartment();
+        break;
+        
+        case "Add Role":
+         addRole();
         break;
         
         case "View All Departments":
@@ -163,7 +168,6 @@ function init(){
       })
   }
 
-
  //add new department
  function addDepartment() {
     inquirer.prompt([
@@ -175,6 +179,34 @@ function init(){
     ]).then(answers => {
         var query = `INSERT INTO department (name)
         VALUES("${answers.name})`;
+            connection.query(query, function(err, res){
+                console.table(res)
+                init();
+            })
+    })
+}
+
+  //add new role
+  function addRole() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "title",
+            message: "What is the employee's title?"
+        },
+        {
+            type: "input",
+            name: "salary",
+            message: "What is the employee's salary?"
+        },
+        {
+            type: "input",
+            name: "departmentID",
+            message: "What is the employee's department id?"
+        }
+    ]).then(answers => {
+        var query = `INSERT INTO role (title, salary, department_id)
+        VALUES("${answers.title}", "${answers.salary}", ${answers.departmentId})`;
             connection.query(query, function(err, res){
                 console.table(res)
                 init();
