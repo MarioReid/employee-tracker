@@ -34,6 +34,7 @@ function init(){
                 "View All Employees",
                 "Add Employee",
                 "View All Departments",
+                "View All Roles",
                 "Update Employee Role",
                 "Exit"
             ]
@@ -54,8 +55,12 @@ function init(){
          displayDepartment();
         break;
 
+        case "View All Roles":
+         displayRole();
+        break;
+   
         case "Update Employee Role":
-         songSearch();
+         updateEmployee();
         break;
 
         case "Exit":
@@ -82,6 +87,45 @@ function init(){
               init();
           })
         }
+
+ //display role
+    function displayRole(){
+        var query = "SELECT * FROM role";
+            connection.query(query, function(err, res){
+                console.table(res)
+                init();
+            })
+          }
+      
+ //update employee
+ function updateEmployee(){
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "targetId",
+            message: "Please give the id of the employee that you want to update: "
+        }, 
+        {
+            type: "input",
+            name: "targetId",
+            message: "What is the new value of role id?"
+        } 
+    ]).then(answer => {
+
+        var targetId = answer.targetId;
+        var newValue = answer.newValue
+
+            var query = `UPDATE employee
+            SET role_id= "${newValue}"
+            WHERE employee.id = ${targetId};`;
+
+                connection.query(query, function(err, res){
+                    console.table(res)
+                    init();
+                })
+    })
+      }
+
   //create new employee
   function addEmployee() {
       inquirer.prompt([
